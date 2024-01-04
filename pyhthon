@@ -1,0 +1,45 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+# from matplotlib.offsetbox import OffsetImage, AnnotationBbox
+
+# Read the dataset into a dataframe
+
+df = pd.read_csv('GrowLocations.csv')
+# Display the first few rows of the dataframe to verify column names
+
+
+# Swaping Longitude AND LATTITUDE LIMITEd AS THEIR LABELS ARE WRONGLY INTERCHANGED
+latitude_min, latitude_max = -10.592, 1.6848
+longitude_min, longitude_max =50.681, 57.985 
+
+# Applying linmits on dataframe exceeding bounds
+df = df[
+    (df['Longitude'] >= longitude_min) & (df['Longitude'] <= longitude_max) &
+    (df['Latitude'] >= latitude_min) & (df['Latitude'] <= latitude_max)
+]
+
+
+# Plot the locations of sensors on the map
+fig, ax = plt.subplots()
+# ax.scatter(long_up1, lat_up1)
+ax.scatter(df['Latitude'], df['Longitude'],  c='black')
+ax.set_title('Plotting the Grow Data')
+ax.set_xlabel('Latitude')
+ax.set_ylabel('Longitude')
+
+
+# Load the background image
+background_img = plt.imread('map7.png')  # Replace 'your_image.png' with the actual image path
+
+# Display the background image using imshow
+ax.imshow(background_img, extent=[latitude_min, latitude_max, longitude_min, longitude_max, ], aspect='auto')
+plt.show()
+
+
+
+
+
+
+
+
+
